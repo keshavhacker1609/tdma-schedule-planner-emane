@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nem SYSTEM "file:///usr/share/emane/dtd/nem.dtd">
+<nem>
+  <transport definition="transport11.xml"/>
+  <mac definition="tdmamac.xml"/>
+  <phy definition="phy.xml"/>
+</nem>

@@ -1,0 +1,15 @@
+EMANE 1.5.3, Ubuntu 22.04 container (--privileged), 16 NEMs, examples/grid_16.json
+
+SLOT_US=10000, this project's schedule (9 slots)
+  120 pairs behaved as scheduled, 0 mismatches
+  frame length 9 slots, 16 simultaneous flows, mean loss 0.8%, worst flow 4%
+
+SLOT_US=10000, BASELINE=1 (plain distance-1 colouring, 4 slots)
+  120 pairs behaved as scheduled, 0 mismatches
+  frame length 4 slots, 16 simultaneous flows, mean loss 43.1%, worst flow 78%
+
+SLOT_US=1000 (spec slot length), this project's schedule
+  92 pairs behaved as scheduled, 28 mismatches
+  (non-realtime containers miss slot boundaries; NEM 1: numRxSlotErrorMissed = 8, numTxSlotValid = 535)
+
+NEM 1 neighbour table (emanesh): NEMs 2, 5, 6 only = the radios within 500 m of Node_01.
