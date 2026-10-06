@@ -98,7 +98,7 @@ story += [Spacer(1, 3.2 * cm),
           Spacer(1, 2 * cm),
           table([["Prepared for", "Vaan Megam Networks Private Limited"],
                  ["Submitted by", CANDIDATE],
-                 ["Work period", "1 October 2026 - 7 October 2026 (7 days)"],
+                 ["Work period", "28 September 2026 - 6 October 2026 (7 working days, Monday to Friday)"],
                  ["Part 1 (mandatory)", "Python schedule optimizer (the \"Brain\")"],
                  ["Part 2 (bonus)", "EMANE 1.5.3 TDMA integration (the \"Engine\")"],
                  ["Repository", "see README.md at the repository root"]],
@@ -175,10 +175,11 @@ story += [P("2. Requirements and where each one is met", h1),
 
 # ------------------------------------------------------------------ 3 day log
 story += [P("3. Day-wise work log", h1),
-          P("The task had a seven-day window. The log below records what was done on each day, the reasoning behind "
+          P("The task had a seven-day window, worked on the seven working days from Monday 28 September to Tuesday 6 October "
+            "(the weekend of 3-4 October excluded). The log below records what was done on each day, the reasoning behind "
             "it, and what it produced.")]
 
-story += day("Day 1 - 1 October: understanding the problem and fixing the model",
+story += day("Day 1 - Monday, 28 September: understanding the problem and fixing the model",
              "Understand TDMA, interference, and what EMANE expects, and settle the mathematical model before writing code.",
              ["Read the brief and the referenced material: EMANE TDMA model guide, NetworkX tutorial, and papers on distance-2 colouring for wireless networks.",
               "Wrote the three scenarios out by hand: two radios in range, a hidden terminal (A - B - C), and two radios three hops apart.",
@@ -191,7 +192,7 @@ story.append(fig("hidden_terminal.png", 11))
 story.append(P("Figure 1. The hidden-terminal case. A and C are 800 m apart and cannot hear each other, but both are heard "
                "by B, so they must not share a slot.", small))
 
-story += day("Day 2 - 2 October: graph layer and input handling",
+story += day("Day 2 - Tuesday, 29 September: graph layer and input handling",
              "Turn coordinates into graphs, with strict input handling.",
              ["Wrote topology.py: JSON parsing, validation, connectivity graph, and distance-2 conflict graph.",
               "Rejected malformed input explicitly: bad JSON, empty object, wrong arity, non-numeric values, NaN and Infinity, each with a clear message and exit code 2.",
@@ -200,7 +201,7 @@ story += day("Day 2 - 2 October: graph layer and input handling",
               "Accepted 2-D or 3-D coordinates; the brief shows 2-D but the model does not depend on it."],
              "Graph layer finished; first unit tests for direct and hidden-terminal conflicts.")
 
-story += day("Day 3 - 3 October: constructive heuristics, CLI and report",
+story += day("Day 3 - Wednesday, 30 September: constructive heuristics, CLI and report",
              "Get a first correct, end-to-end schedule and the report format from the brief.",
              ["Implemented DSATUR, largest-first and smallest-last greedy colouring, and randomised DSATUR restarts.",
               "Wrote report.py to reproduce the sample layout: header block, node-to-slot list, and the Slot x Node boolean matrix. Added a slot-to-node view that makes spatial reuse visible.",
@@ -210,7 +211,7 @@ story += day("Day 3 - 3 October: constructive heuristics, CLI and report",
               "Seeded randomness (--seed) so every run is reproducible, which matters for a demo and for debugging."],
              "A working command-line tool producing the required output.")
 
-story += day("Day 4 - 4 October: reducing the slot count, and proving correctness",
+story += day("Day 4 - Thursday, 1 October: reducing the slot count, and proving correctness",
              "Push the heuristics beyond greedy, and make the correctness claim independent of the optimizer.",
              ["Added TabuCol local search: fix k = best - 1 colours and move conflicting nodes with a tabu list until no conflicts remain.",
               "Added an exact DSATUR branch-and-bound for small graphs, which either finds a better colouring or proves the current one optimal. Added the clique lower bound.",
@@ -224,7 +225,7 @@ story.append(fig("grid_slots.png", 10.5))
 story.append(P("Figure 2. The 4x4 grid after optimisation. Same colour means same slot: nodes 1, 4, 13 and 16 transmit "
                "together in slot 0 because they are more than two hops apart.", small))
 
-story += day("Day 5 - 5 October: EMANE research and the bridge",
+story += day("Day 5 - Friday, 2 October: EMANE research and the bridge",
              "Learn exactly what EMANE's TDMA model consumes, and build the converter.",
              ["Studied the EMANE TDMA schedule format: structure (frames, slots, slot duration), multiframe (frequency, datarate), frame, and slot elements with tx and rx.",
               "Wrote bridge.py. Each node transmits in its coloured slot and listens in every other slot. Nodes sharing a colour appear in one nodes list.",
@@ -235,7 +236,7 @@ story += day("Day 5 - 5 October: EMANE research and the bridge",
               "In the simulator the distance-2 schedule delivers all 84 directed links; a plain distance-1 colouring loses 64 frames to hidden-terminal collisions."],
              "Bridge output validated for well-formedness and against the Python schedule in tests.")
 
-story += day("Day 6 - 6 October: running EMANE and fixing what it rejected",
+story += day("Day 6 - Monday, 5 October: running EMANE and fixing what it rejected",
              "Run the generated configuration on a real EMANE and make it work.",
              ["Built a Docker image with EMANE 1.5.3 on Ubuntu 22.04. One network namespace per radio, one emane process each, an event service for the pathloss events, and emaneevent-tdmaschedule for the schedule.",
               "EMANE rejected the first attempt several times. Fixed: missing subid in the PHY profile, -Inf not accepted as an EEL timestamp, wrong flag for the pid file, event service started from the wrong directory, and a missing networkx package in the image.",
@@ -247,7 +248,7 @@ story += day("Day 6 - 6 October: running EMANE and fixing what it rejected",
 story.append(fig("emane_loss.png", 9.5))
 story.append(P("Figure 3. Mean packet loss with 16 simultaneous flows on EMANE 1.5.3 (10 ms slots).", small))
 
-story += day("Day 7 - 7 October: documentation, presentation, packaging",
+story += day("Day 7 - Tuesday, 6 October: documentation, presentation, packaging",
              "Finish the deliverables the brief lists: source code, documentation as PDF, presentation as PPT, in a Git repository.",
              ["Wrote README, design notes and this report; built the slide deck for the presentation and demo.",
               "Re-ran all 29 tests, regenerated the sample outputs, and reviewed every deliverable against the brief (section 2)."],
